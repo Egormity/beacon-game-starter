@@ -44,6 +44,20 @@ Level data alone does not replace the example's island art, objective labels, or
 genre, adapt world/character factories and interface copy deliberately. When retaining several
 examples, a small presentation variant can separate their art without duplicating shared game rules.
 
+## Develop in playable increments
+
+Inspect the existing app and installed versions, then state the smallest playable acceptance case.
+Map each requested mechanic to an owner and a test before adding dependencies. Prove a greybox
+loop with real controls; add one mechanic through types/data, validation, simulation, snapshot/events,
+presentation and UI; then replace placeholder assets and profile the result. Keep source HTML,
+TypeScript, CSS and content readable and formatter-checked. Only production output is minified.
+
+Use the same process for racing, shooters, platformers, strategy or physics puzzles; Beacon is not
+a complete implementation of those genres. Record what already works and what must be added. For
+large worlds, animation blending, AI/pathfinding, vehicles, procedural generation, multiplayer or
+editors, choose the relevant subsystem deliberately instead of putting it in a giant update function.
+Give new mechanics reset/pause/load semantics and validate them independently before integration.
+
 ## Time, movement, and physics
 
 Use one fixed-step simulation owner and a bounded accumulator. Beacon uses 1/60-second steps,
@@ -61,6 +75,45 @@ geometry and installed version rather than copying controller settings blindly.
 Make level traversal a real check: valid data alone cannot establish reachability. Include blocked
 movement, landings, collection/outcomes, fall recovery, and reset behavior. Treat trigger volumes
 separately from solid obstacles. Preserve previous/current pose consistency when teleporting.
+
+## Advanced physics and effects
+
+Select features from the requested behavior; do not add a physics engine to purely decorative art.
+Beacon already includes gravity/jumps for a kinematic character and solid collision. The following
+are extension paths, not claims that the sample implements every system:
+
+- Choose fixed bodies for immovable level geometry, kinematic bodies for authored motion, and
+  dynamic bodies for force/contact-driven objects. Apply forces/impulses to dynamic bodies rather
+  than overwriting their pose each frame. Keep units, mass, gravity, friction and restitution
+  explicit and tune them against the intended scale. Character gravity is application-owned;
+  dynamic-body gravity belongs to the physics world. Do not integrate either twice.
+- Separate collision shapes from detailed render meshes. Prefer simple or compound convex shapes
+  for moving objects; reserve detailed static meshes for a measured need. Define collision groups
+  and query filters, sensors versus solid contacts, and which entity IDs own their consequences.
+  Enable required collision events, consume them once in the simulation, and defer unsafe removal
+  until the step has finished. Filters must apply to character queries as well as body contacts.
+- Use ray/shape casts for line of sight, aiming, ground probes or swept movement. Test fast thin
+  projectiles for tunnelling; choose supported CCD or explicit sweeps for relevant bodies. Do not
+  assume higher render FPS solves collision misses or that every physics feature is enabled.
+- Hinges, ropes, suspension and ragdolls need constrained bodies: validate joint anchors/axes,
+  limits, motors, mass ratios and reset/disposal behavior. Prototype one mechanism before scaling
+  it up. A rigid-body engine does not automatically supply fluids, cloth, deformable materials or
+  engineering-grade accuracy; identify a separate solver or visual approximation when needed.
+- Treat smoke, sparks, trails and debris as presentation unless they affect gameplay. Feed an
+  effects owner stable event IDs so an interpolated/replayed snapshot cannot emit a burst again.
+  Use a bounded particle pool with lifetime and maximum count, batched points/instances, and
+  explicit texture/material ownership. Avoid one rigid body, light or React component per spark.
+  Gameplay projectiles keep authoritative collision even if their visual trail is reduced.
+- Keep camera shake, screen-space shaders, fog, shadows and post-processing separate from rules.
+  Cap pixel ratio, transparent overdraw, shadow resolution and effect density by measured device
+  budget. Pause/reset effects with the session, remove them on level replacement, and retain clear
+  feedback in reduced-motion/low-quality modes. Profile CPU simulation and GPU rendering separately.
+
+Test collision filtering, enter/exit/one-shot triggers, resting contacts, gravity/jump behavior,
+fast motion, constraint stability, seeded effects where reproducibility matters, bounded particle
+counts, and disposal after repeated restarts for the systems actually implemented. Keep previous
+and current poses for interpolated bodies, including rotation; do not confuse visual interpolation
+with collision state. See the reference's `docs/advanced-systems.md` for concrete extension seams.
 
 ## Browser and asset lifetime
 
@@ -86,6 +139,11 @@ Dockerfile together. Amazi permits source path `.` for one root application; for
 allocated application root and preserve its registration. Do not invent a repository manifest.
 Honor runtime `PORT` and `0.0.0.0`; retain Node 22 compatibility, pnpm 11.7.0, and the Docker build
 contract. GitHub connection and application registration are separate operations.
+Load Amazi's current application-configuration guidance before importing; use `empty_application`
+for supplied source, preserve the allocated path, and keep deployment flags and Vite adapters in
+the application catalog. Do not copy generated `dist` as editable source. See
+[Amazi applications](https://docs.amazi.pro/en/applications) and
+[publishing](https://docs.amazi.pro/en/publishing-and-domains).
 
 Test rules and fixed-step invariants independently of UI, then exercise real controls and complete
 the example loop through the project's authorized browser-testing workflow. Verify pause/resume,
@@ -100,6 +158,10 @@ remains device- or deployment-dependent.
 Primary references: [Three.js games](https://threejs.org/manual/pages/game.html),
 [Rapier controllers](https://rapier.rs/docs/user_guides/javascript/character_controller_setup/),
 [Rapier initialization](https://rapier.rs/docs/user_guides/javascript/getting_started_js/),
+[rigid bodies](https://rapier.rs/docs/user_guides/javascript/rigid_bodies/),
+[colliders](https://rapier.rs/docs/user_guides/javascript/colliders/),
+[scene queries](https://rapier.rs/docs/user_guides/javascript/scene_queries/),
+[joints](https://rapier.rs/docs/user_guides/javascript/joints/),
 [Three.js disposal](https://threejs.org/manual/pages/how-to-dispose-of-objects.html),
 [PlayCanvas standalone](https://developer.playcanvas.com/user-manual/engine/standalone/),
 [Babylon features](https://www.babylonjs.com/specifications/).

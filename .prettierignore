@@ -2,5 +2,3 @@ node_modules
 dist
 .playwright
 pnpm-lock.yaml
-skill/agent-content.md
-skill/catalog.json

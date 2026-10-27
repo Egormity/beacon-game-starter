@@ -118,3 +118,9 @@ Keep `package.json`, the lockfile, Vite configuration, `src/`, `public/`, and Do
 one application. Amazi can register that application at source path `.` or copy it into an allocated
 application directory. Its metadata does not belong in an invented repository manifest. Keep
 Node 22 compatibility, pnpm 11.7.0, `0.0.0.0`, and runtime `PORT` support intact.
+
+## Advanced systems
+
+Use [Advanced mechanics and effects](advanced-systems.md) for gravity, collision filtering,
+constraints, fast motion, particles, renderer capabilities and a staged development workflow.
+The reference is a playable starting point; those extension paths are not all implemented features.

@@ -57,6 +57,9 @@ chunk (about 1.65 MB gzipped in this build); the loading screen waits for it bef
 The example is single-player. It does not implement multiplayer authority, networking, pathfinding,
 an asset editor, or full save-game persistence.
 
+See [Advanced systems](docs/advanced-systems.md) for physics, gravity, constraints, particles and
+effects, including what the example already implements and which owners to extend.
+
 ## Verify changes
 
 ```bash
