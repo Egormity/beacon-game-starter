@@ -1,0 +1,10 @@
+.git
+.env
+.env.*
+dist
+node_modules
+.playwright
+__pycache__
+**/__pycache__
+*.log
+*.tsbuildinfo

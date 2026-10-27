@@ -1,0 +1,258 @@
+@media (max-width: 1150px) {
+  .app-shell .header-edition {
+    display: none;
+  }
+  .app-shell .source-link {
+    margin-left: auto;
+  }
+  .app-shell .main-layout {
+    grid-template-columns: 230px minmax(0, 1fr);
+    gap: 28px;
+  }
+  .app-shell .mission-heading h1 {
+    font-size: 39px;
+  }
+  .app-shell .keyboard-legend {
+    gap: 14px;
+  }
+  .app-shell .keyboard-legend > span:last-child {
+    display: none;
+  }
+  .app-shell .game-caption {
+    align-items: start;
+  }
+  .app-shell .display-settings {
+    flex-direction: column;
+    gap: 0;
+  }
+}
+@media (max-width: 800px) {
+  .app-shell {
+    padding: 0 20px !important;
+  }
+  .app-shell .site-header {
+    height: 76px;
+  }
+  .app-shell .brand {
+    font-size: 19px;
+  }
+  .app-shell .brand-icon {
+    width: 33px;
+    height: 33px;
+  }
+  .app-shell .source-link {
+    font-size: 10px;
+    gap: 8px;
+  }
+  .app-shell .main-layout {
+    display: flex;
+    flex-direction: column;
+    padding-top: 26px;
+    gap: 25px;
+  }
+  .app-shell .mission-panel {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding: 0;
+  }
+  .app-shell .mission-heading h1 {
+    font-size: 38px;
+    margin: 14px 0;
+  }
+  .app-shell .mission-description {
+    font-size: 12px;
+  }
+  .app-shell .island-picker {
+    margin-top: 0;
+    padding-top: 5px;
+    border: none;
+  }
+  .app-shell .mission-checklist,
+  .app-shell .personal-best {
+    display: none;
+  }
+  .app-shell .help-button {
+    grid-column: 1 / -1;
+    padding: 0;
+    max-width: 250px;
+  }
+  .app-shell .game-frame {
+    min-height: 490px;
+    height: 65svh;
+    max-height: 750px;
+  }
+  .app-shell .game-hud {
+    left: 17px;
+    right: 17px;
+    top: 18px;
+  }
+  .app-shell .run-stats {
+    gap: 13px;
+  }
+  .app-shell .objective-cue {
+    bottom: 18px;
+    font-size: 9px;
+    max-width: calc(100% - 30px);
+    white-space: normal;
+    text-align: center;
+  }
+  .app-shell .overlay-card {
+    width: 305px;
+    padding: 25px 22px;
+  }
+  .app-shell .overlay-card h2 {
+    font-size: 34px;
+  }
+  .app-shell .display-settings {
+    flex-direction: row;
+    gap: 16px;
+  }
+  .app-shell .site-footer > span:last-child {
+    gap: 15px;
+    font-size: 8px;
+  }
+}
+@media (max-width: 440px) {
+  .app-shell {
+    padding: 0 14px !important;
+  }
+  .app-shell .mission-panel {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  .app-shell .mission-heading h1 {
+    font-size: 36px;
+  }
+  .app-shell .mission-heading h1 br {
+    display: none;
+  }
+  .app-shell .mission-heading h1 em::before {
+    content: ' ';
+  }
+  .app-shell .mission-description {
+    max-width: none;
+  }
+  .app-shell .island-picker {
+    display: grid;
+    grid-template-columns: 1fr 1.6fr;
+    align-items: center;
+    gap: 9px;
+  }
+  .app-shell .island-picker > div {
+    margin: 0;
+  }
+  .app-shell .island-picker > p {
+    grid-column: 1 / -1;
+    margin: 0;
+  }
+  .app-shell .game-caption > p {
+    max-width: 130px;
+    line-height: 1.5;
+  }
+  .app-shell .display-settings {
+    flex-direction: column;
+    gap: 0;
+  }
+  .app-shell .game-toolbar {
+    padding: 12px 0;
+  }
+  .app-shell .keyboard-legend {
+    font-size: 9px;
+    gap: 12px;
+  }
+  .app-shell .game-hud .timer {
+    display: none;
+  }
+  .app-shell .source-link {
+    font-size: 0;
+    gap: 0;
+  }
+  .app-shell .source-link svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+@media (pointer: coarse) {
+  .app-shell .touch-controls:not([hidden]) {
+    position: absolute;
+    bottom: 48px;
+    left: 20px;
+    right: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    pointer-events: none;
+  }
+  .touch-controls .touch-stick {
+    width: 104px;
+    height: 104px;
+    position: relative;
+    border: 1px solid #ecf5de77;
+    border-radius: 50%;
+    background: #203e3d38;
+    touch-action: none;
+    pointer-events: auto;
+  }
+  .touch-controls .stick-knob {
+    width: 43px;
+    height: 43px;
+    border-radius: 50%;
+    background: #f0f2daaa;
+    position: absolute;
+    left: 30px;
+    top: 30px;
+    transform: translate(var(--stick-x, 0px), var(--stick-y, 0px));
+    border: 1px solid #ffffff90;
+  }
+  .touch-controls .stick-cross {
+    position: absolute;
+    top: 37px;
+    left: 39px;
+    font-size: 25px;
+    color: #f7f5de80;
+  }
+  .touch-controls .stick-label {
+    position: absolute;
+    bottom: -18px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: #f2f2d9;
+    font-size: 8px;
+    letter-spacing: 0.13em;
+  }
+  .touch-controls .touch-jump {
+    pointer-events: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    border: 1px solid #eff6da99;
+    color: #f6f3dd;
+    border-radius: 50%;
+    width: 67px;
+    height: 67px;
+    background: #29494377;
+    touch-action: none;
+  }
+  .touch-controls .touch-jump span {
+    font-size: 8px;
+    letter-spacing: 0.1em;
+  }
+  .app-shell .keyboard-legend {
+    display: none;
+  }
+  .app-shell .session-controls {
+    margin-left: auto;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}
