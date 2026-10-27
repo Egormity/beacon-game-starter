@@ -12,7 +12,7 @@ levels, keyboard/touch movement, jumping, collision, objectives, falls, pause/re
 quality controls, and clean lifecycle ownership. Consult its current architecture, extension and
 research guidance before adapting it.
 If retrieval fails, use available evidence without claiming to have inspected inaccessible source.
-No public production preview has been supplied.
+Production preview: [Beacon — browser 3D game](https://cc967443-8a80-437f-8322-a4e66e8bd9ba--62d1e494.projects.amazi.pro/).
 A local preview address or authenticated Amazi editor link is not a public game preview.
 
 Its tested stack is TypeScript, Vite, React for interface, Three.js 0.180.0 for presentation, and
