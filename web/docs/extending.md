@@ -1,5 +1,7 @@
 # Extending the game
 
+Paths in this guide are relative to the application root (`web/` in the repository).
+
 Start by running the unchanged example, then make one playable change. Keep the user's requested
 genre and interaction model; the collect-and-return loop demonstrates the foundation without
 requiring future games to use the same mechanic.
@@ -115,8 +117,8 @@ from a fixed timestep alone.
 ## Preserve the runtime boundary
 
 Keep `package.json`, the lockfile, Vite configuration, `src/`, `public/`, and Dockerfile together as
-one application. Amazi can register that application at source path `.` or copy it into an allocated
-application directory. Its metadata does not belong in an invented repository manifest. Keep
+one standalone application in `web/`. Amazi registers that folder as source path `web` when using
+the complete repository. For imports, copy only its contents into the allocated application directory. Its metadata does not belong in an invented repository manifest. Keep
 Node 22 compatibility, pnpm 11.7.0, `0.0.0.0`, and runtime `PORT` support intact.
 
 ## Advanced systems

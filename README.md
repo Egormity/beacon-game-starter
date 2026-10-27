@@ -1,81 +1,47 @@
 # Beacon — browser 3D game starter
 
-A reusable TypeScript foundation with a small playable game. Explore two islands, collect energy
-cells, jump across obstacles, and return to the beacon. The example demonstrates real collision,
-objectives, pause/resume, restart, respawn, touch input, and graphics recovery.
+A playable example and reusable game foundation for Amazi. The complete, independently runnable application is in [`web/`](web/); repository-level [`skill/`](skill/agent-content.md) contains the custom skill instructions and localized Admin metadata.
 
-The main deliverable is the structure: level data and gameplay rules are independent of Three.js,
-input devices feed actions, one loop advances Rapier, and React displays low-frequency snapshots.
-Use the mechanics that fit your game instead of turning every new project into a collection game.
-
-## Start here
-
-Use Node 22.12 or newer and the pinned pnpm 11.7.0:
-
-```bash
-pnpm install
-pnpm dev
+```text
+web/
+  package.json
+  pnpm-lock.yaml
+  Dockerfile
+  src/
+  public/
+  docs/
+  e2e/
+skill/
+README.md
 ```
 
-Open `http://127.0.0.1:4420`. Press **Play Island Relay**, then use WASD or the arrow keys to move,
-Space to jump, Shift to sprint, Escape to pause, and R to restart. Controls are active while the
-game canvas has focus. On a touchscreen, use the movement pad and Jump button; both levels are
-completable without sprinting. Switch islands with the selector.
+## Run and verify
 
-Falling returns you to the spawn point with collected cells retained. Restart clears the current
-run. Winning requires every cell and entering the beacon ring. Your best time and display
-preferences are stored on the device; there is no account or server. Hidden tabs pause the game.
-Less motion disables decorative movement and camera easing, while necessary game movement remains.
+Use Node 22.12+ and pnpm 11.7.0. From this repository root:
 
 ```bash
-pnpm build
-python3 scripts/launch.py
+pnpm --dir web install --frozen-lockfile
+pnpm --dir web dev
+pnpm --dir web format:check
+pnpm --dir web typecheck
+pnpm --dir web test
+pnpm --dir web build
+pnpm --dir web test:browser
 ```
 
-The optional desktop launcher opens the built app at `http://127.0.0.1:4421` using a loopback-only
-Python server. `--no-open` starts it without a window; `--stop` stops only that launcher's server.
-The local checkout is `/home/egormity/Desktop/egormity-repos/Egormity/beacon-game-starter`.
+Open `http://127.0.0.1:4420`. See the [application README](web/README.md) for controls, desktop preview and extension details.
 
-## Extend the foundation
+## Use in Amazi
 
-| Owner        | Responsibility                                                           | Start reading                            |
-| ------------ | ------------------------------------------------------------------------ | ---------------------------------------- |
-| `src/game`   | Level definitions, validation, physics, session rules, objectives        | `types.ts`, `levels.ts`, `simulation.ts` |
-| `src/engine` | Fixed-step timing, action input, browser lifecycle, renderer composition | `createGame.ts`, `fixedStepClock.ts`     |
-| `src/render` | Three.js world, character, camera, lighting, resource ownership          | `renderer.ts`, `world.ts`, `player.ts`   |
-| `src/ui`     | React screens, HUD, touch controls, preferences                          | `App.tsx`, `useGame.ts`                  |
-| `skill`      | Versioned instructions and localized metadata for the Amazi custom skill | `agent-content.md`, `catalog.json`       |
+The provided project layout uses `sourcePath: web` and `productionBuildContext: application`. Its Dockerfile is `web/Dockerfile`; commands run inside `web/`.
 
-- [Architecture](docs/architecture.md): ownership, timing, data flow, and disposal.
-- [Extending the example](docs/extending.md): add a level, mechanic, character model, or persistence.
-- [Research and choices](docs/research.md): official references and alternatives.
-- [Amazi setup](docs/amazi.md): application placement and development/production contracts.
-
-All game visuals are procedural. No remote assets, API keys, build-time platform package, or
-runtime CDN is required. Rapier's compatibility package embeds WebAssembly in its own cached
-chunk (about 1.65 MB gzipped in this build); the loading screen waits for it before enabling Play.
-The example is single-player. It does not implement multiplayer authority, networking, pathfinding,
-an asset editor, or full save-game persistence.
-
-See [Advanced systems](docs/advanced-systems.md) for physics, gravity, constraints, particles and
-effects, including what the example already implements and which owners to extend.
-
-## Verify changes
+For an existing project, create `empty_application` and copy **only the contents of `web/`** into the returned application source path. Keep that allocated path, which may have another name. Do not copy the repository root or nest a second `web/` inside the allocated application. Registration remains separate from source transfer. To use the exact name `web`, configure the empty application before copying files and only if that target directory is absent; changing the source path moves the allocated folder.
 
 ```bash
-pnpm typecheck
-pnpm format:check
-pnpm test
-pnpm build
-pnpm test:browser
+docker build -t beacon-game-starter ./web
+docker run --rm -e PORT=10000 -p 127.0.0.1:4423:10000 beacon-game-starter
 ```
 
-Unit tests exercise real Rapier collisions, jumping, state transitions, complete routes through
-both sample levels, fixed timing, input edges, and lifecycle disposal. Browser checks use installed
-Google Chrome on a temporary port 4422 and exercise real keyboard/touch input, collecting a cell,
-pause/restart, level replacement, preferences, unsupported WebGL, and context-loss recovery.
-Set `CHROME_PATH` for another Chromium executable. Screenshots go into ignored `.playwright/`.
+Read [Amazi setup](web/docs/amazi.md), [architecture](web/docs/architecture.md), [extension guidance](web/docs/extending.md), and [advanced systems](web/docs/advanced-systems.md). The public template uses `main`; connect a separate eligible output repository when Amazi's initial synchronization flow requires no existing `main` branch. A public production preview has not been supplied.
 
-The core source is MIT licensed; dependencies keep their own licenses. See
-[third-party notices](THIRD_PARTY_NOTICES.md). The skill is authored for Amazi's Admin catalog;
-the JSON metadata is not a project manifest and has no custom-skill slug. Amazi assigns its UUID.
+Original code is [MIT licensed](LICENSE). The app includes its own license and asset notices so `web/` can be copied independently.

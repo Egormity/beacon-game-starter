@@ -9,8 +9,8 @@ collection game is an example, not a required design.
 
 [Beacon game starter](https://github.com/Egormity/beacon-game-starter) demonstrates two playable
 levels, keyboard/touch movement, jumping, collision, objectives, falls, pause/resume, restart,
-quality controls, and clean lifecycle ownership. Read `docs/architecture.md`, `docs/extending.md`,
-and `docs/research.md` before adapting it. The public template's default branch is `main`.
+quality controls, and clean lifecycle ownership. Consult its current architecture, extension and
+research guidance before adapting it.
 If retrieval fails, use available evidence without claiming to have inspected inaccessible source.
 No public production preview has been supplied.
 A local preview address or authenticated Amazi editor link is not a public game preview.
@@ -19,6 +19,8 @@ Its tested stack is TypeScript, Vite, React for interface, Three.js 0.180.0 for 
 Rapier 0.21.0 for physics. Reuse an existing suitable framework and its conventions when extending
 a project. Babylon.js and PlayCanvas are valid fuller-engine alternatives; React Three Fiber is
 also reasonable in an established project. Do not migrate a working game just to match Beacon.
+
+Inspect the repository’s current README, application folders and documentation before adapting it. Identify the standalone application boundary from its actual build and runtime files; do not assume an example’s paths or filenames remain unchanged. Repository-level skill metadata is not an application dependency.
 
 ## Establish the playable foundation
 
@@ -36,9 +38,9 @@ Keep these responsibilities separate, at the scale the game needs:
 - UI owns menus, HUD, settings, loading/error states, and lifecycle attachment.
 - One composition owner creates and disposes the game and schedules its updates.
 
-Beacon implements these in `src/engine`, `src/game`, `src/render`, and `src/ui`. Prefer a focused
+Locate the example’s engine, rules, rendering and interface owners. Prefer a focused
 module or data extension over a speculative ECS, global event framework, or empty directory tree.
-Register a new level in `src/game/levels.ts`; the example selector already reads that collection.
+Locate the current level-data collection and how the selector consumes it before adding a level.
 Rendering must not decide that an item was collected or a player won.
 
 Level data alone does not replace the example's island art, objective labels, or HUD. For a different
@@ -114,7 +116,7 @@ Test collision filtering, enter/exit/one-shot triggers, resting contacts, gravit
 fast motion, constraint stability, seeded effects where reproducibility matters, bounded particle
 counts, and disposal after repeated restarts for the systems actually implemented. Keep previous
 and current poses for interpolated bodies, including rotation; do not confuse visual interpolation
-with collision state. See the reference's `docs/advanced-systems.md` for concrete extension seams.
+with collision state. Inspect the reference's current advanced-systems guidance for extension seams.
 
 ## Browser and asset lifetime
 
@@ -135,11 +137,16 @@ startup/download cost when expanding it. Add audio only after a user gesture and
 
 ## Amazi and verification
 
-Keep the application root's package file, lockfile, Vite configuration, source, public assets, and
-Dockerfile together. Amazi permits source path `.` for one root application; for imports, use the
-allocated application root and preserve its registration. Do not invent a repository manifest.
-Honor runtime `PORT` and `0.0.0.0`; retain Node 22 compatibility, pnpm 11.7.0, and the Docker build
-contract. GitHub connection and application registration are separate operations.
+Keep each application in a standalone folder inside the project repository, with its own package
+files, lockfile, configuration, source, assets, tests and Dockerfile. Inspect the reference's current
+structure to find that folder. For supplied source, create an empty application and copy only the
+application folder's contents into the returned source path. Preserve that allocated path; never
+copy the whole example repository or nest another application folder inside it. If a specific folder
+name is required, configure the empty application before copying source, and only when the target
+path is absent. Use the application build context when every Docker input is application-local.
+Commands run inside the registered source path. Honor injected `PORT`, `0.0.0.0`, Node 22
+compatibility, the pinned package manager and the Docker contract. GitHub synchronization does not
+register applications; do not invent a repository app manifest.
 Load Amazi's current application-configuration guidance before importing; use `empty_application`
 for supplied source, preserve the allocated path, and keep deployment flags and Vite adapters in
 the application catalog. Do not copy generated `dist` as editable source. See
