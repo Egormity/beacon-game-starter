@@ -1,0 +1,49 @@
+.help-dialog {
+  width: 430px;
+  max-width: calc(100vw - 32px);
+  border: 1px solid #dde3cf;
+  background: var(--paper);
+  color: var(--ink);
+  padding: 32px;
+  border-radius: 4px;
+  box-shadow: 0 20px 60px #173a3c40;
+}
+.help-dialog::backdrop {
+  background: #17333d99;
+  backdrop-filter: blur(5px);
+}
+.close-help {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+}
+.help-dialog h2 {
+  font: 400 36px var(--serif);
+  letter-spacing: -0.05em;
+  margin: 14px 0 17px;
+}
+.help-dialog > p:not(.eyebrow) {
+  color: #73816a;
+  font-size: 13px;
+  line-height: 1.8;
+}
+.help-dialog dl {
+  margin: 24px 0;
+}
+.help-dialog dl > div {
+  display: flex;
+  justify-content: space-between;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 12px;
+}
+.help-dialog dd {
+  color: #77886a;
+}
+.help-dialog .help-note {
+  font-size: 11px !important;
+}
+.help-dialog > .primary-button {
+  margin-top: 25px;
+  width: 100%;
+}

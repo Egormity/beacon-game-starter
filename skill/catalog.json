@@ -1,0 +1,10 @@
+{
+  "userTitleEn": "Browser 3D games",
+  "userTitleRu": "Браузерные 3D-игры",
+  "userTitleEs": "Juegos 3D para navegador",
+  "userDescriptionEn": "Build playable browser 3D games on a reusable foundation. Separate input, simulation, rendering, interface, and level data, with working controls, physics, objectives, pause, restart, and mobile support. Includes the Beacon starter example.",
+  "userDescriptionRu": "Создавайте браузерные 3D-игры на расширяемой основе. Разделяйте ввод, симуляцию, визуализацию, интерфейс и данные уровней. Включает управление, физику, цели, паузу, перезапуск, поддержку мобильных устройств и пример Beacon.",
+  "userDescriptionEs": "Crea juegos 3D para navegador sobre una base reutilizable. Separa entrada, simulación, renderizado, interfaz y datos de niveles, con controles, física, objetivos, pausa, reinicio y soporte móvil. Incluye el ejemplo Beacon.",
+  "icon": "gamepad-2",
+  "agentDescription": "Use for building or extending real playable browser 3D games with player input, simulation, rules, objectives, and outcomes. Prioritize a reusable structure separating input, game state, physics, rendering, UI, and level data. Includes the Beacon TypeScript/Three.js/Rapier example and guidance for fixed stepping, controls, lifecycle, assets, Amazi runtime compatibility, and verification. Preserve the user's genre and an existing suitable engine; this skill is not for orbit-only viewers or decorative 3D scenes."
+}
