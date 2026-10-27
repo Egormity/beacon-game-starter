@@ -1,5 +1,7 @@
 # Research and implementation choices
 
+Paths in this guide are relative to the application root (`web/` in the repository).
+
 Reviewed 2026-10-27. This project pins Three.js 0.180.0 and Rapier compatibility package 0.21.0.
 The decision is specific to a small, inspectable starter whose gameplay can be replaced.
 

@@ -1,5 +1,7 @@
 # Architecture
 
+Paths in this guide are relative to the application root (`web/` in the repository).
+
 Beacon is a small game with explicit ownership boundaries. The reusable part is how input,
 simulation, presentation, and browser lifecycle fit together. Its two island levels are examples;
 there is no entity-component framework, backend, or editor to maintain before a game needs one.
@@ -96,7 +98,7 @@ The current example has no external model downloads or server calls. Local stora
 preferences and per-level personal bests; a player can change these values, so they are not a
 competitive leaderboard. Multiplayer or shared scores require a separate authority design.
 
-The application lives at the repository root with Vite, a committed lockfile, and an Amazi-compatible
+The application lives in the repository’s `web/` directory with Vite, its own committed lockfile, and an Amazi-compatible
 Dockerfile. Amazi application registration is outside this Git repository. Preserve runtime `PORT`,
 the public container bind address, and source-path registration when importing or extending it.
 

@@ -1,5 +1,7 @@
 # Advanced mechanics and effects
 
+Paths in this guide are relative to the application root (`web/` in the repository).
+
 Beacon provides a kinematic player, gravity/jumps, static solid collision and two complete routes.
 It does not already include dynamic crates, joints, particles, weapons or multiplayer. Use this
 guide to locate those extensions without losing the ownership in [architecture](architecture.md).
