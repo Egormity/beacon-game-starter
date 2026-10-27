@@ -4,11 +4,13 @@ This repository is one frontend application at its root. `package.json`, `index.
 `src/`, and `public/` belong together. Amazi supports `sourcePath: "."` when that application owns
 the entire project workspace. Application registration lives in Amazi, not in a repository manifest.
 
-For source import into another project, create an `empty_application` and copy this repository's
-source into the allocated application directory. Keep the returned source path; do not overwrite
-other applications. GitHub synchronization copies the workspace tree and does not discover or
-register apps. Initial connection requires a repository without `main`, which is why this example
-starts on `feature/codex/beacon-game-starter/2026-10-27`.
+This public template uses `main` as its default branch. For source import into another project,
+create an `empty_application` and copy the source from `main` into the allocated application
+directory. Keep the returned source path; do not overwrite other applications.
+
+GitHub synchronization copies the workspace tree and does not discover or register apps. Its
+initial connection requires a repository without `main`; connect a separate eligible output
+repository for your Amazi project instead of connecting this published source template directly.
 
 | Setting                        | Value                                                |
 | ------------------------------ | ---------------------------------------------------- |

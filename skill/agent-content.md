@@ -10,8 +10,9 @@ collection game is an example, not a required design.
 [Beacon game starter](https://github.com/Egormity/beacon-game-starter) demonstrates two playable
 levels, keyboard/touch movement, jumping, collision, objectives, falls, pause/resume, restart,
 quality controls, and clean lifecycle ownership. Read `docs/architecture.md`, `docs/extending.md`,
-and `docs/research.md` before adapting it. The repository may require access; do not assume an
-agent or user can fetch a private repository. No public production preview has been supplied.
+and `docs/research.md` before adapting it. The public template's default branch is `main`.
+If retrieval fails, use available evidence without claiming to have inspected inaccessible source.
+No public production preview has been supplied.
 A local preview address or authenticated Amazi editor link is not a public game preview.
 
 Its tested stack is TypeScript, Vite, React for interface, Three.js 0.180.0 for presentation, and
