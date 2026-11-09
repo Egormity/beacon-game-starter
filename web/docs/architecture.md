@@ -24,8 +24,8 @@ flowchart LR
 
 | Owner                 | Files                                                                        | Responsibility                                                                 |
 | --------------------- | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
-| Application shell     | `src/ui/App.tsx`, `useGame.ts`                                               | Menus, HUD, preferences, level selection, lifecycle attachment                 |
-| Interface composition | `src/ui/MissionPanel.tsx`, `GameStage.tsx`                                   | Mission and level controls, canvas, overlay, touch pad, session controls       |
+| Application shell     | `src/ui/App.tsx`, `IslandMenu.tsx`, `HelpDialog.tsx`, `useGame.ts`           | Header, island menu, help and display settings, preferences, lifecycle attach  |
+| Interface composition | `src/ui/GameStage.tsx`, `GameHud.tsx`, `GameOverlay.tsx`                     | Full-screen canvas, mission progress, session controls, overlays, touch pad    |
 | Browser engine        | `src/engine/createGame.ts`                                                   | Creates owners, runs the frame loop, handles pause, resizing, errors, disposal |
 | Timing                | `src/engine/fixedStepClock.ts`                                               | Accumulates frame time into bounded fixed simulation steps                     |
 | Input                 | `src/engine/inputState.ts`, `keyboard.ts`, `src/ui/TouchControls.tsx`        | Converts devices into movement, sprint, and jump actions                       |

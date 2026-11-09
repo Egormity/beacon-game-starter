@@ -1,4 +1,4 @@
-import { ArrowRight, Play, RadioTower, RotateCcw } from 'lucide-react';
+import { Play, RotateCcw } from 'lucide-react';
 import type { GamePhase } from '../game/types';
 import { formatTime } from './preferences';
 
@@ -6,89 +6,98 @@ interface Props {
   phase: GamePhase | undefined;
   error: string | null;
   elapsed: number;
-  falls: number;
+  best: number | null;
   play: () => void;
   resume: () => void;
   restart: () => void;
   retry: () => void;
 }
+
 export const GameOverlay = ({
   phase,
   error,
   elapsed,
-  falls,
+  best,
   play,
   resume,
   restart,
   retry,
 }: Props) => {
   if (!error && phase === 'playing') return null;
+
+  const cardClass = [
+    'overlay-card',
+    !error && !phase ? 'is-loading' : '',
+    phase === 'paused' ? 'is-compact' : '',
+  ]
+    .filter(Boolean)
+    .join(' ');
+
   return (
     <div className="game-overlay">
-      <div className="overlay-card">
-        <span className="overlay-symbol">
-          <RadioTower size={27} strokeWidth={1.4} />
-        </span>
+      <div className={cardClass}>
         {error ? (
           <>
-            <p className="eyebrow">THE SIGNAL GOT LOST</p>
-            <h2>Let’s try that again.</h2>
-            <p>{error}</p>
-            <p className="error-hint">
-              This game needs WebGL 2. Try an up-to-date browser with hardware acceleration enabled.
+            <h2>The island didn’t load.</h2>
+            <p className="overlay-lead">{error}</p>
+            <p className="overlay-note">
+              This game needs WebGL 2. Try a current browser with hardware acceleration turned on.
             </p>
-            <button className="primary-button" onClick={retry}>
-              <RotateCcw size={17} />
+            <button type="button" className="primary-button" onClick={retry}>
+              <RotateCcw size={18} aria-hidden="true" />
               Reload the island
             </button>
           </>
         ) : !phase ? (
-          <>
-            <p className="eyebrow">PREPARING YOUR ISLAND</p>
-            <h2>A moment of calm.</h2>
-            <p role="status">Loading the world…</p>
-          </>
+          <div className="overlay-loading" role="status">
+            <span className="spinner" aria-hidden="true" />
+            <p>Loading the island…</p>
+          </div>
         ) : phase === 'ready' ? (
           <>
-            <p className="eyebrow">A SMALL ADVENTURE</p>
-            <h2>The signal is waiting.</h2>
-            <p>
-              Gather the energy cells.
-              <br />
-              Find your way back to the light.
-            </p>
-            <button className="primary-button" onClick={play}>
-              <Play size={16} fill="currentColor" />
-              Play Island Relay
-              <ArrowRight size={17} />
+            <h2>Light up the island.</h2>
+            <p className="overlay-lead">Collect the energy cells, then return to the beacon.</p>
+            <button type="button" className="primary-button" onClick={play}>
+              <Play size={19} fill="currentColor" aria-hidden="true" />
+              Play
             </button>
-            <small>WASD to move · Space to jump</small>
+            <div className="control-hints" aria-hidden="true">
+              <span>
+                <kbd>WASD</kbd> Move
+              </span>
+              <span>
+                <kbd>Space</kbd> Jump
+              </span>
+            </div>
+            <p className="touch-hint">Drag to move · Tap Jump to leap</p>
           </>
         ) : phase === 'paused' ? (
           <>
-            <p className="eyebrow">TAKE YOUR TIME</p>
-            <h2>A little breather.</h2>
-            <p>Your island will be right here.</p>
-            <button className="primary-button" onClick={resume}>
-              <Play size={16} />
-              Continue exploring
+            <h2>Paused</h2>
+            <button type="button" className="primary-button" onClick={resume}>
+              Continue
+            </button>
+            <button type="button" className="secondary-button" onClick={restart}>
+              Restart island
             </button>
           </>
         ) : (
           <>
-            <p className="eyebrow">SIGNAL RESTORED</p>
-            <h2>You brought the light.</h2>
-            <p>
-              The island is back online.
-              <br />
-              {formatTime(elapsed)} ·{' '}
-              {falls === 0
-                ? 'A clean run'
-                : `${falls} ${falls === 1 ? 'return' : 'returns'} to shore`}
-            </p>
-            <button className="primary-button" onClick={restart}>
-              <RotateCcw size={17} />
-              Take another run
+            <h2>Signal restored.</h2>
+            <p className="overlay-lead">The beacon is glowing again.</p>
+            <div className="overlay-stats">
+              <div className="overlay-stat">
+                <span>Time</span>
+                <strong>{formatTime(elapsed)}</strong>
+              </div>
+              <div className="overlay-stat">
+                <span>Best</span>
+                <strong>{formatTime(best ?? elapsed)}</strong>
+              </div>
+            </div>
+            <button type="button" className="primary-button" onClick={restart}>
+              <RotateCcw size={18} aria-hidden="true" />
+              Play again
             </button>
           </>
         )}

@@ -6,6 +6,7 @@ interface Props {
   jump: () => void;
   disabled: boolean;
 }
+
 export const TouchControls = ({ move, jump, disabled }: Props) => {
   const pad = useRef<HTMLDivElement>(null);
   const pointer = useRef<number | null>(null);
@@ -50,9 +51,7 @@ export const TouchControls = ({ move, jump, disabled }: Props) => {
         onPointerCancel={clear}
         onLostPointerCapture={clear}
       >
-        <span className="stick-cross">＋</span>
         <span className="stick-knob" />
-        <span className="stick-label">MOVE</span>
       </div>
       <button
         type="button"
@@ -66,8 +65,8 @@ export const TouchControls = ({ move, jump, disabled }: Props) => {
           if (event.detail === 0) jump();
         }}
       >
-        <ArrowUp size={24} />
-        <span>JUMP</span>
+        <ArrowUp size={22} aria-hidden="true" />
+        <span>Jump</span>
       </button>
     </div>
   );

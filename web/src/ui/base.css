@@ -1,14 +1,18 @@
 :root {
-  font-family: 'Helvetica Neue', Arial, sans-serif;
-  color: #243936;
-  background: #f1f1e9;
-  --ink: #243936;
-  --muted: #758179;
-  --line: #daddd0;
-  --accent: #c4663f;
-  --paper: #f1f1e9;
-  --forest: #344f43;
-  --serif: Georgia, 'Times New Roman', serif;
+  color-scheme: dark;
+  --ink: #f7f3e7;
+  --muted: #a9bdb3;
+  --faint: #7f978c;
+  --accent: #f7bd6d;
+  --accent-strong: #f0a94f;
+  --accent-ink: #2b1c0a;
+  --mint: #96eccb;
+  --glass: rgba(7, 28, 24, 0.5);
+  --glass-strong: rgba(8, 31, 27, 0.82);
+  --glass-line: rgba(247, 243, 231, 0.16);
+  --font-sans: 'Helvetica Neue', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+  --font-display: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
+  font-family: var(--font-sans);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -16,45 +20,68 @@
 * {
   box-sizing: border-box;
 }
+html {
+  background: #061512;
+}
 body {
   margin: 0;
   min-width: 320px;
+  overflow: hidden;
+  background: #071815;
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.5;
+}
+#root {
+  min-height: 100svh;
 }
 button,
 select {
   font: inherit;
   color: inherit;
 }
-button,
-a {
-  -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
-}
 button {
   cursor: pointer;
+  border: 0;
 }
 button:disabled {
   cursor: default;
-  opacity: 0.4;
+  opacity: 0.45;
 }
 a {
   color: inherit;
   text-decoration: none;
 }
-button:focus-visible,
-a:focus-visible,
-select:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 4px;
-}
 button,
-select {
-  border-radius: 0;
+a {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
 }
 h1,
 h2,
-p {
+p,
+dl,
+dd,
+dt {
   margin: 0;
+}
+kbd {
+  display: inline-grid;
+  place-items: center;
+  min-width: 24px;
+  height: 24px;
+  padding: 0 6px;
+  border: 1px solid rgba(247, 243, 231, 0.18);
+  border-radius: 7px;
+  background: rgba(247, 243, 231, 0.08);
+  color: var(--ink);
+  font: 600 12px/1 var(--font-sans);
+  letter-spacing: 0.02em;
 }
 .sr-only {
   position: absolute;

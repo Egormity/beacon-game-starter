@@ -19,10 +19,11 @@ pnpm install
 pnpm dev
 ```
 
-Open `http://127.0.0.1:4420`. Press **Play Island Relay**, then use WASD or the arrow keys to move,
-Space to jump, Shift to sprint, Escape to pause, and R to restart. Controls are active while the
-game canvas has focus. On a touchscreen, use the movement pad and Jump button; both levels are
-completable without sprinting. Switch islands with the selector.
+Open `http://127.0.0.1:4420`. Press **Play**, then use WASD or the arrow keys to move, Space to jump,
+Shift to sprint, Escape to pause, and R to restart. Controls are active while the game canvas has
+focus. On a touchscreen, use the movement pad and Jump button; both levels are completable without
+sprinting. Switch islands from the menu at the top; open **Help** for the full control list and
+display settings.
 
 Falling returns you to the spawn point with collected cells retained. Restart clears the current
 run. Winning requires every cell and entering the beacon ring. Your best time and display

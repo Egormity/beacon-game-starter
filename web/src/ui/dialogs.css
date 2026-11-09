@@ -1,49 +1,158 @@
 .help-dialog {
-  width: 430px;
-  max-width: calc(100vw - 32px);
-  border: 1px solid #dde3cf;
-  background: var(--paper);
+  width: min(480px, calc(100vw - 32px));
+  max-height: min(88svh, 760px);
+  overflow-y: auto;
+  padding: clamp(24px, 4vw, 34px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 26px;
+  background:
+    radial-gradient(120% 100% at 50% 0%, rgba(255, 209, 140, 0.1), transparent 55%),
+    linear-gradient(165deg, #12362f, #08231f);
   color: var(--ink);
-  padding: 32px;
-  border-radius: 4px;
-  box-shadow: 0 20px 60px #173a3c40;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
 }
 .help-dialog::backdrop {
-  background: #17333d99;
-  backdrop-filter: blur(5px);
-}
-.close-help {
-  position: absolute;
-  top: 16px;
-  right: 16px;
+  background: rgba(3, 16, 14, 0.62);
+  backdrop-filter: blur(7px);
 }
 .help-dialog h2 {
-  font: 400 36px var(--serif);
-  letter-spacing: -0.05em;
-  margin: 14px 0 17px;
+  padding-right: 32px;
+  font-family: var(--font-display);
+  font-size: clamp(30px, 4vw, 38px);
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
 }
-.help-dialog > p:not(.eyebrow) {
-  color: #73816a;
-  font-size: 13px;
-  line-height: 1.8;
+.dialog-close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--glass-line);
+  border-radius: 50%;
+  background: rgba(247, 243, 231, 0.06);
+  color: var(--ink);
+  transition: background-color 140ms ease;
 }
-.help-dialog dl {
-  margin: 24px 0;
+.dialog-close:hover {
+  background: rgba(247, 243, 231, 0.14);
 }
-.help-dialog dl > div {
+.dialog-lead {
+  margin-top: 14px;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.65;
+}
+.control-list {
+  display: grid;
+  gap: 2px;
+  margin-top: 20px;
+}
+.control-list > div {
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  padding: 9px 0;
-  border-bottom: 1px solid var(--line);
+  gap: 16px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(247, 243, 231, 0.1);
+}
+.control-list > div:last-child {
+  border-bottom: 0;
+}
+.control-list dt {
+  font-size: 15px;
+}
+.control-list dd {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 13px;
+}
+.dialog-note {
+  margin-top: 8px;
+  color: var(--faint);
+  font-size: 13px;
+  line-height: 1.55;
+}
+.settings {
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(247, 243, 231, 0.12);
+}
+.settings-title {
+  color: var(--muted);
   font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
-.help-dialog dd {
-  color: #77886a;
+.switch-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  width: 100%;
+  padding: 12px 0;
+  background: transparent;
+  color: var(--ink);
+  text-align: left;
 }
-.help-dialog .help-note {
-  font-size: 11px !important;
+.switch-row:disabled {
+  opacity: 0.55;
+}
+.switch-row:focus-visible {
+  border-radius: 10px;
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.switch-label {
+  display: block;
+  font-size: 15px;
+  font-weight: 500;
+}
+.switch-copy small {
+  display: block;
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.45;
+}
+.switch {
+  position: relative;
+  flex-shrink: 0;
+  width: 48px;
+  height: 28px;
+  pointer-events: none;
+  border: 1px solid rgba(247, 243, 231, 0.2);
+  border-radius: 999px;
+  background: rgba(247, 243, 231, 0.1);
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease;
+}
+.switch::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fdf9ee;
+  transition: transform 160ms ease;
+}
+.switch-row[aria-checked='true'] .switch {
+  border-color: transparent;
+  background: var(--accent);
+}
+.switch-row[aria-checked='true'] .switch::after {
+  background: var(--accent-ink);
+  transform: translateX(20px);
 }
 .help-dialog > .primary-button {
-  margin-top: 25px;
-  width: 100%;
+  margin-top: 22px;
 }

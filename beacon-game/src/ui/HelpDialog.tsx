@@ -1,7 +1,15 @@
 import { useEffect, useRef } from 'react';
 import { X } from 'lucide-react';
+import type { Preferences } from './preferences';
 
-export const HelpDialog = ({ onClose }: { onClose: () => void }) => {
+interface Props {
+  preferences: Preferences;
+  systemReduced: boolean;
+  onChange: (next: Preferences) => void;
+  onClose: () => void;
+}
+
+export const HelpDialog = ({ preferences, systemReduced, onChange, onClose }: Props) => {
   const dialog = useRef<HTMLDialogElement>(null);
   useEffect(() => {
     const previous = document.activeElement as HTMLElement | null;
@@ -11,6 +19,9 @@ export const HelpDialog = ({ onClose }: { onClose: () => void }) => {
       previous?.focus();
     };
   }, []);
+
+  const toggle = (key: keyof Preferences) => onChange({ ...preferences, [key]: !preferences[key] });
+
   return (
     <dialog
       className="help-dialog"
@@ -19,50 +30,84 @@ export const HelpDialog = ({ onClose }: { onClose: () => void }) => {
         event.preventDefault();
         onClose();
       }}
+      onClick={(event) => {
+        if (event.target === dialog.current) onClose();
+      }}
       aria-labelledby="help-title"
     >
-      <button
-        type="button"
-        className="icon-button close-help"
-        onClick={onClose}
-        aria-label="Close controls"
-      >
-        <X size={20} />
+      <button type="button" className="dialog-close" onClick={onClose} aria-label="Close help">
+        <X size={19} aria-hidden="true" />
       </button>
-      <p className="eyebrow">YOUR FIELD GUIDE</p>
-      <h2 id="help-title">A little direction.</h2>
-      <p>
-        Collect every floating energy cell, then walk into the beacon’s ring. Jump onto the raised
-        platforms. If you fall, you return to the start with your cells.
+      <h2 id="help-title">How to play</h2>
+      <p className="dialog-lead">
+        Collect every energy cell, then step into the beacon ring. Falling takes you back to the
+        start — you keep the cells you found.
       </p>
-      <dl>
+      <dl className="control-list">
         <div>
           <dt>Move</dt>
-          <dd>W A S D / arrow keys</dd>
+          <dd>
+            <kbd>WASD</kbd>
+            <span>or arrow keys</span>
+          </dd>
         </div>
         <div>
           <dt>Jump</dt>
-          <dd>Space</dd>
+          <dd>
+            <kbd>Space</kbd>
+          </dd>
         </div>
         <div>
           <dt>Sprint</dt>
-          <dd>Hold Shift</dd>
+          <dd>
+            <kbd>Shift</kbd>
+          </dd>
         </div>
         <div>
-          <dt>Pause</dt>
-          <dd>Escape</dd>
-        </div>
-        <div>
-          <dt>Restart</dt>
-          <dd>R</dd>
+          <dt>Pause / restart</dt>
+          <dd>
+            <kbd>Esc</kbd>
+            <kbd>R</kbd>
+          </dd>
         </div>
       </dl>
-      <p className="help-note">
-        On touchscreens, drag the movement pad and tap Jump. The game pauses when you leave the tab.
-        Your best time is saved on this device.
-      </p>
-      <button className="primary-button" type="button" onClick={onClose}>
-        Got it
+      <p className="dialog-note">On a touchscreen, drag the left pad to move and tap Jump.</p>
+      <div className="settings">
+        <p className="settings-title">Display</p>
+        <button
+          type="button"
+          role="switch"
+          className="switch-row"
+          aria-checked={preferences.lowQuality}
+          aria-label="Light graphics"
+          onClick={() => toggle('lowQuality')}
+        >
+          <span className="switch-copy">
+            <span className="switch-label">Light graphics</span>
+            <small>Best for older phones and laptops.</small>
+          </span>
+          <span className="switch" aria-hidden="true" />
+        </button>
+        <button
+          type="button"
+          role="switch"
+          className="switch-row"
+          aria-checked={systemReduced || preferences.reducedMotion}
+          aria-label="Reduce motion"
+          disabled={systemReduced}
+          onClick={() => toggle('reducedMotion')}
+        >
+          <span className="switch-copy">
+            <span className="switch-label">Reduce motion</span>
+            <small>
+              {systemReduced ? 'Following your device setting.' : 'Calms the camera and effects.'}
+            </small>
+          </span>
+          <span className="switch" aria-hidden="true" />
+        </button>
+      </div>
+      <button type="button" className="primary-button" onClick={onClose}>
+        Done
       </button>
     </dialog>
   );

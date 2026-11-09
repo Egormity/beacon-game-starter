@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
-import { ArrowUpRight, Leaf, RadioTower, Waves } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { CircleHelp, RadioTower } from 'lucide-react';
 import { levels } from '../game/levels';
 import { useGame } from './useGame';
 import { readPreferences, savePreferences } from './preferences';
 import { HelpDialog } from './HelpDialog';
-import { MissionPanel } from './MissionPanel';
 import { GameStage } from './GameStage';
+import { IslandMenu } from './IslandMenu';
 
 export const App = () => {
   const [levelId, setLevelId] = useState(levels[0].id);
@@ -15,6 +15,7 @@ export const App = () => {
     () => matchMedia('(prefers-reduced-motion: reduce)').matches,
   );
   const [help, setHelp] = useState(false);
+  const resumeAfterHelp = useRef(false);
   const controller = useGame(level, {
     ...preferences,
     reducedMotion: systemReduced || preferences.reducedMotion,
@@ -34,77 +35,46 @@ export const App = () => {
       systemReduced || preferences.reducedMotion ? 'reduced' : 'full';
   }, [preferences.reducedMotion, systemReduced]);
 
+  const openHelp = () => {
+    resumeAfterHelp.current = controller.snapshot?.phase === 'playing';
+    controller.game.current?.pause();
+    setHelp(true);
+  };
+
+  const closeHelp = () => {
+    setHelp(false);
+    if (resumeAfterHelp.current) {
+      resumeAfterHelp.current = false;
+      controller.resume();
+    }
+  };
+
   return (
     <div className="app-shell">
-      <header className="site-header">
-        <a className="brand" href="#main" aria-label="Beacon game">
-          <span className="brand-icon">
-            <RadioTower size={25} strokeWidth={1.6} />
+      <header className="top-bar">
+        <a className="brand" href="#stage" aria-label="Beacon">
+          <span className="brand-mark" aria-hidden="true">
+            <RadioTower size={19} strokeWidth={1.9} />
           </span>
-          BEACON<span className="brand-period">●</span>
+          <span className="brand-word">Beacon</span>
         </a>
-        <span className="header-edition">
-          ISLAND RELAY <i /> A LITTLE WORLD TO GET LOST IN
-        </span>
-        <a
-          className="source-link"
-          href="https://github.com/Egormity/beacon-game-starter"
-          target="_blank"
-          rel="noreferrer"
-        >
-          Explore the source
-          <ArrowUpRight size={16} />
-        </a>
+        <div className="top-actions">
+          <IslandMenu levels={levels} level={level} onChange={setLevelId} />
+          <button type="button" className="help-trigger" onClick={openHelp} aria-label="Help">
+            <CircleHelp size={18} aria-hidden="true" />
+            <span>Help</span>
+          </button>
+        </div>
       </header>
-      <main id="main" className="main-layout">
-        <MissionPanel
-          levels={levels}
-          level={level}
-          collected={controller.snapshot?.collectedIds.length ?? 0}
-          phase={controller.snapshot?.phase}
-          best={controller.best}
-          onLevelChange={setLevelId}
-          onHelp={() => {
-            controller.game.current?.pause();
-            setHelp(true);
-          }}
+      <GameStage level={level} controller={controller} />
+      {help && (
+        <HelpDialog
+          preferences={preferences}
+          systemReduced={systemReduced}
+          onChange={setPreferences}
+          onClose={closeHelp}
         />
-        <GameStage level={level} controller={controller}>
-          <div className="game-caption">
-            <p>
-              <span>TAKE THE SCENIC ROUTE.</span> The signal can wait a moment.
-            </p>
-            <div className="display-settings">
-              <button
-                aria-pressed={preferences.lowQuality}
-                onClick={() =>
-                  setPreferences((value) => ({ ...value, lowQuality: !value.lowQuality }))
-                }
-              >
-                <Leaf size={14} />
-                Light graphics
-              </button>
-              <button
-                aria-pressed={systemReduced || preferences.reducedMotion}
-                disabled={systemReduced}
-                onClick={() =>
-                  setPreferences((value) => ({ ...value, reducedMotion: !value.reducedMotion }))
-                }
-              >
-                <Waves size={14} />
-                Less motion
-              </button>
-            </div>
-          </div>
-        </GameStage>
-      </main>
-      <footer className="site-footer">
-        <span>FIND YOUR SPARK.</span>
-        <span>
-          A tiny adventure, made to be yours.<span className="footer-star">✳</span>
-        </span>
-      </footer>
-      {help && <HelpDialog onClose={() => setHelp(false)} />}
+      )}
     </div>
   );
 };
